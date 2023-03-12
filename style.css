@@ -1,0 +1,18 @@
+#addApplication{
+    justify-content: center;
+    align-items: center;
+}
+
+a:link{
+    text-decoration: none;
+    
+}
+
+.navbar-nav{
+  
+}
+
+nav a:hover {
+    background-color: gainsboro;
+}
+
