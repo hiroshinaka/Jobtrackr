@@ -52,7 +52,8 @@ function saveAppInfo(){
                                 link: Link,
                                 resumeUrl: resumeUrl,
                                 coverLetterUrl: coverLetterUrl,
-                                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                                stage: 1
                             }).then(() => {
                                 console.log("Successfully added application");
                                 window.location.href = "main.html"; //new line added

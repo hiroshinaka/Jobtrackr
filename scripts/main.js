@@ -17,7 +17,7 @@ function displayJobsApplied(collection) {
           var countJobsApplied = 0;
           allJobsApplied.forEach((doc) => {
             var userID = doc.data().userID;
-            if (userID == user.uid) {
+            if (userID == user.uid && doc.data().stage == 1) {
               countJobsApplied = countJobsApplied + 1;
               //iterate thru each doc
               var positionApplied = doc.data().inputPosition; // get value of the "name" key
@@ -56,7 +56,9 @@ function displayJobsApplied(collection) {
                 //Delete application----------------
 
                 newcard.querySelector(".deleteApp").innerHTML = "Delete";
-                newcard.querySelector(".deleteApp").setAttribute("data-uid", doc.id);
+                newcard
+                  .querySelector(".deleteApp")
+                  .setAttribute("data-uid", doc.id);
 
                 //Optional: give unique ids to all elements for future use
                 // newcard.querySelector('.card-title').setAttribute("id", "ctitle" + i);
@@ -81,14 +83,5 @@ function displayJobsApplied(collection) {
     }
   });
 }
-
-// function deleteEntry(id) {
-//   db.collection("applications").doc(id).delete().then(() => {
-//     console.log(id + "deleted");
-//     window.location.href="main.html";
-//   }).catch((error) => {
-//     console.log("error: ", error);
-//   })
-// }
 
 displayJobsApplied("applications"); //input param is the name of the collection
