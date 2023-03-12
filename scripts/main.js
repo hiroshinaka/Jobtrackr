@@ -1,7 +1,6 @@
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
 //------------------------------------------------------------------------------
-const deleteBtn = document.getElementById("deleteApp");
 
 function displayJobsApplied(collection) {
   let cardTemplate = document.getElementById("jobsAppliedTemplate");
@@ -40,23 +39,24 @@ function displayJobsApplied(collection) {
                 let newcard = cardTemplate.content.cloneNode(true);
 
                 //update title and text and image
-                newcard.querySelector("#positionApplied").innerHTML =
+                newcard.querySelector(".positionApplied").innerHTML =
                   positionApplied;
-                newcard.querySelector("#companyName").innerHTML = companyName;
-                newcard.querySelector("#dateApplied").innerHTML =
+                newcard.querySelector(".companyName").innerHTML = companyName;
+                newcard.querySelector(".dateApplied").innerHTML =
                   "Applied on " + dateApplied;
-                newcard.querySelector("#jobPostingLink").href = jobPostingLink;
-                newcard.querySelector("#jobPostingLink").innerHTML =
+                newcard.querySelector(".jobPostingLink").href = jobPostingLink;
+                newcard.querySelector(".jobPostingLink").innerHTML =
                   "Link to Posting";
-                newcard.querySelector("#resume").href = snapshot[0];
-                newcard.querySelector("#resume").innerHTML = "Your Resume";
-                newcard.querySelector("#coverLetter").href = snapshot[1];
-                newcard.querySelector("#coverLetter").innerHTML =
+                newcard.querySelector(".resume").href = snapshot[0];
+                newcard.querySelector(".resume").innerHTML = "Your Resume";
+                newcard.querySelector(".coverLetter").href = snapshot[1];
+                newcard.querySelector(".coverLetter").innerHTML =
                   "Your Cover Letter";
 
                 //Delete application----------------
 
-                newcard.querySelector("#deleteApp").innerHTML = "Delete";
+                newcard.querySelector(".deleteApp").innerHTML = "Delete";
+                newcard.querySelector(".deleteApp").setAttribute("data-uid", doc.id);
 
                 //Optional: give unique ids to all elements for future use
                 // newcard.querySelector('.card-title').setAttribute("id", "ctitle" + i);
@@ -82,7 +82,13 @@ function displayJobsApplied(collection) {
   });
 }
 
-function deleteEntry(id) {
-  var entry = document;
-}
+// function deleteEntry(id) {
+//   db.collection("applications").doc(id).delete().then(() => {
+//     console.log(id + "deleted");
+//     window.location.href="main.html";
+//   }).catch((error) => {
+//     console.log("error: ", error);
+//   })
+// }
+
 displayJobsApplied("applications"); //input param is the name of the collection

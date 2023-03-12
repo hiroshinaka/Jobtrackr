@@ -77,14 +77,14 @@
         <template id="jobsAppliedTemplate">
           <div class="cardjobs">
             <div class="card-body">
-              <p class="card-text" id="positionApplied">Placeholder</p>
-              <p class="card-text" id="companyName">Placeholder</p>
-              <p class="card-text" id="dateApplied">Placeholder</p>
-              <a href="#" class="btn btn-success" target="_blank" id="jobPostingLink">Placeholder</a>
-              <a href="#" class="btn btn-success" target="_blank" id="resume">Placeholder</a>
-              <a href="#" class="btn btn-success" target="_blank" id="coverLetter">Placeholder</a>
+              <p class="positionApplied">Placeholder</p>
+              <p class="companyName">Placeholder</p>
+              <p class="dateApplied">Placeholder</p>
+              <a href="#" class="btn btn-success jobPostingLink" target="_blank">Placeholder</a>
+              <a href="#" class="btn btn-success resume" target="_blank">Placeholder</a>
+              <a href="#" class="btn btn-success coverLetter" target="_blank">Placeholder</a>
               <!--Delete application-->
-              <a href="#" class="btn btn-outline-dark" target="_blank" id="deleteApp">Placeholder</a>
+              <a class="btn btn-outline-dark deleteApp" target="_blank" id="deleteApp" data-uid="" onclick="deleteEntry(this.getAttribute('data-uid'))">Placeholder</a>
               
             </div>
           </div>
@@ -99,6 +99,16 @@
     <!--JS-->
     <script src="./scripts/skeleton.js" defer></script>
     <script src="./scripts/main.js" type="module"></script>
+    <script>
+      function deleteEntry(id) {
+        db.collection("applications").doc(id).delete().then(() => {
+          window.location.href="main.html";
+          console.log(id + " deleted");
+        }).catch((error) => {
+          console.log("error: ", error);
+        })
+      }
+    </script>
     <!-- Bootstrap JS -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
