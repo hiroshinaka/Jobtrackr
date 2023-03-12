@@ -6,5 +6,5 @@ firebase
     console.log("logging out user");
   })
   .catch((error) => {
-    console.log("logout error");
+    console.log("Logout error");
   });
