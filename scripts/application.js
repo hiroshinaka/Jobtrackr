@@ -28,40 +28,47 @@ function saveAppInfo(){
             //get the document for current user.
             currentUser.get()
                 .then(userDoc => {
-                    // create a new storage reference to the user's folder
-                    var storageRef = firebase.storage().ref().child('users/' + userID);
+                    db.collection("applications").add({
+                        userID: userID,
+                        inputPosition: Position,
+                        inputCompanyName: CompanyName,
+                        date: Dates,
+                        link: Link,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        stage: 1
+                    }).then(function(docRef) {
+                        var id = docRef.id;
 
-                    // upload the resume file to the storage
-                    var resumeRef = storageRef.child('resume.pdf').put(resumeFile, {contentType: 'application/pdf'});
+                        // create a new storage reference to the user's folder
+                        var storageRef = firebase.storage().ref().child('users/' + userID);
 
-                    // upload the cover letter file to the storage
-                    var coverLetterRef = storageRef.child('cover_letter.pdf').put(coverLetterFile, {contentType: 'application/pdf'});
+                        // upload the resume file to the storage
+                        var resumeRef = storageRef.child('resume-' + id + '.pdf').put(resumeFile, {contentType: 'application/pdf'});
 
-                    // wait for both files to upload and get their download URLs
-                    Promise.all([resumeRef, coverLetterRef])
-                        .then((snapshot) => {
-                            const resumeUrl = snapshot[0].metadata.fullPath;
-                            const coverLetterUrl = snapshot[1].metadata.fullPath;
+                        // upload the cover letter file to the storage
+                        var coverLetterRef = storageRef.child('cover_letter-' + id + '.pdf').put(coverLetterFile, {contentType: 'application/pdf'});
 
-                            // save the application info and the file download URLs to the database
-                            db.collection("applications").add({
-                                userID: userID,
-                                inputPosition: Position,
-                                inputCompanyName: CompanyName,
-                                date: Dates,
-                                link: Link,
-                                resumeUrl: resumeUrl,
-                                coverLetterUrl: coverLetterUrl,
-                                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                                stage: 1
-                            }).then(() => {
-                                console.log("Successfully added application");
-                                window.location.href = "main.html"; //new line added
+                        // wait for both files to upload and get their download URLs
+                        Promise.all([resumeRef, coverLetterRef])
+                            .then((snapshot) => {
+                                const resumeUrl = snapshot[0].metadata.fullPath;
+                                const coverLetterUrl = snapshot[1].metadata.fullPath;
+
+                                // save the application info and the file download URLs to the database
+                                db.collection("applications").doc(id).update({
+                                    resumeUrl: resumeUrl,
+                                    coverLetterUrl: coverLetterUrl,
+                                }).then(() => {
+                                    console.log("Successfully added application");
+                                    window.location.href = "main.html"; //new line added
+                                })
                             })
-                        })
-                        .catch((error) => {
-                            console.error(error);
-                        });
+                            .catch((error) => {
+                                console.error(error);
+                            });
+                    }).catch((error) => {
+                        console.error(error);
+                    })
                 })
         } else {
             window.location.href = 'form.html';
